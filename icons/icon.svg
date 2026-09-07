@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Codenames">
+  <defs>
+    <radialGradient id="g" cx="50%" cy="42%" r="70%">
+      <stop offset="0%" stop-color="#fff8c8"/>
+      <stop offset="18%" stop-color="#ffb12a"/>
+      <stop offset="48%" stop-color="#e32636"/>
+      <stop offset="72%" stop-color="#c2185b"/>
+      <stop offset="100%" stop-color="#2e0616"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="108" fill="url(#g)"/>
+  <g fill="#111" transform="translate(118 148)">
+    <ellipse cx="78" cy="28" rx="22" ry="24"/>
+    <path d="M52 92l-16 74h26l8-34 10 34h28L90 92c-4-16-10-26-22-30-12 4-14 16-16 30z"/>
+    <path d="M42 166l-8 78 20 4 10-62 8 62 22-2-8-80z"/>
+    <ellipse cx="198" cy="26" rx="23" ry="26"/>
+    <path d="M164 78h70l6 96h-80z"/>
+    <path d="M160 174l-4 80h24l8-60 10 60h26l-8-80z"/>
+  </g>
+  <text x="256" y="430" text-anchor="middle" fill="#fff" font-family="Arial Black, Arial, sans-serif" font-size="48" font-weight="900" letter-spacing="6">C</text>
+</svg>
