@@ -1,4 +1,4 @@
-const CACHE = "codenames-v20";
+const CACHE = "codenames-v21";
 const ASSETS = [
   "./",
   "./index.html",
@@ -6,7 +6,6 @@ const ASSETS = [
   "./app.js",
   "./words.js",
   "./manifest.webmanifest",
-  "./images/icon.svg",
   "./images/icon-192.png",
   "./images/icon-512.png",
   "./images/red-agent-a.jpg",
