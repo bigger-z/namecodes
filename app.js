@@ -15,15 +15,15 @@ const scoreBlueEl = document.getElementById("score-blue");
 const TEAM_LABEL = { red: "Red", blue: "Blue" };
 
 const ART = {
-  red: ["./red-agent-a.jpg", "./red-agent-b.jpg", "./red-agent-c.jpg"],
-  blue: ["./blue-agent-a.jpg", "./blue-agent-b.jpg", "./blue-agent-c.jpg"],
+  red: ["./images/red-agent-a.jpg", "./images/red-agent-b.jpg", "./images/red-agent-c.jpg"],
+  blue: ["./images/blue-agent-a.jpg", "./images/blue-agent-b.jpg", "./images/blue-agent-c.jpg"],
   civilian: [
-    "./civilian-a.jpg",
-    "./civilian-b.jpg",
-    "./civilian-c.jpg",
-    "./civilian-d.jpg",
+    "./images/civilian-a.jpg",
+    "./images/civilian-b.jpg",
+    "./images/civilian-c.jpg",
+    "./images/civilian-d.jpg",
   ],
-  assassin: ["./assassin.jpg"],
+  assassin: ["./images/assassin.jpg"],
 };
 
 let game = createGame();
