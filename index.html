@@ -10,9 +10,9 @@
     <meta name="apple-mobile-web-app-title" content="Codenames" />
     <title>Codenames</title>
     <link rel="manifest" href="./manifest.webmanifest" />
-    <link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
-    <link rel="stylesheet" href="./styles.css?v=9" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./icon-192.png" />
+    <link rel="stylesheet" href="./styles.css?v=17" />
   </head>
   <body>
     <svg class="svg-defs" aria-hidden="true" focusable="false">
@@ -54,35 +54,18 @@
     </div>
 
     <div id="overlay" class="overlay" aria-hidden="true">
-      <svg class="overlay-spies" viewBox="0 0 640 360" aria-hidden="true">
-        <g fill="#111">
-          <g transform="translate(86 42)">
-            <ellipse cx="78" cy="28" rx="22" ry="24" />
-            <path d="M56 50c-4 10-6 16-14 26l12 8 10-18 8 20 14-6c-2-14-4-24-8-32z" />
-            <path d="M48 96l-18 78h28l8-36 10 36h30L88 96c-4-18-8-28-22-32-12 4-16 16-18 32z" />
-            <path d="M38 176l-8 86 22 4 10-70 8 70 24-2-10-90z" />
-            <path d="M30 262h22l4 28-30 8zM86 260h24l8 32-28 4z" />
-          </g>
-          <g transform="translate(338 36)">
-            <ellipse cx="86" cy="30" rx="23" ry="26" />
-            <rect x="68" y="54" width="36" height="18" rx="3" />
-            <path d="M48 72h76l8 108H42z" />
-            <path d="M42 180l-6 92h28l8-70 10 70h30l-8-92z" />
-            <path d="M40 272h26l2 24-30 6zM96 272h30l4 28-32 2z" />
-            <rect x="82" y="78" width="10" height="86" fill="#f4f4f4" opacity="0.95" />
-          </g>
-        </g>
-        <g fill="#f4f4f4">
-          <path d="M148 92c8 2 16 0 22-6v14c-8 4-16 6-24 4z" />
-          <path d="M410 94c10 2 18 0 24-6v16c-8 4-18 6-26 4z" />
-        </g>
-      </svg>
+      <div class="overlay-spies" aria-hidden="true">
+        <div class="overlay-spies-inner">
+          <img class="overlay-spy overlay-spy-left" src="./overlay-spy-left.png?v=16" alt="" />
+          <img class="overlay-spy overlay-spy-right" src="./overlay-spy-right.png?v=16" alt="" />
+        </div>
+      </div>
       <div class="overlay-panel" role="dialog" aria-modal="true" aria-labelledby="overlay-title">
         <p id="overlay-kicker" class="overlay-kicker"></p>
         <h2 id="overlay-title" class="overlay-title"></h2>
         <button type="button" id="restart-btn" class="btn overlay-btn">Restart</button>
       </div>
     </div>
-    <script type="module" src="./app.js?v=8"></script>
+    <script type="module" src="./app.js?v=11"></script>
   </body>
 </html>

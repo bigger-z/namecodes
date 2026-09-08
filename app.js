@@ -1,4 +1,4 @@
-import { WORDS } from "./words.js?v=8";
+import { WORDS } from "./words.js?v=11";
 
 const boardEl = document.getElementById("board");
 const statusEl = document.getElementById("status");
@@ -15,15 +15,15 @@ const scoreBlueEl = document.getElementById("score-blue");
 const TEAM_LABEL = { red: "Red", blue: "Blue" };
 
 const ART = {
-  red: ["./art/red-agent-a.jpg", "./art/red-agent-b.jpg", "./art/red-agent-c.jpg"],
-  blue: ["./art/blue-agent-a.jpg", "./art/blue-agent-b.jpg", "./art/blue-agent-c.jpg"],
+  red: ["./red-agent-a.jpg", "./red-agent-b.jpg", "./red-agent-c.jpg"],
+  blue: ["./blue-agent-a.jpg", "./blue-agent-b.jpg", "./blue-agent-c.jpg"],
   civilian: [
-    "./art/civilian-a.jpg",
-    "./art/civilian-b.jpg",
-    "./art/civilian-c.jpg",
-    "./art/civilian-d.jpg",
+    "./civilian-a.jpg",
+    "./civilian-b.jpg",
+    "./civilian-c.jpg",
+    "./civilian-d.jpg",
   ],
-  assassin: ["./art/assassin.jpg"],
+  assassin: ["./assassin.jpg"],
 };
 
 let game = createGame();
@@ -153,7 +153,7 @@ function renderBoard() {
       button.dataset.type = card.type;
       button.dataset.index = String(index);
       button.style.setProperty("--i", String(index));
-      button.classList.toggle("long", card.word.length > 8);
+      button.classList.toggle("long", card.word.length > 6);
       button.innerHTML = `
         <span class="card-inner">
           <span class="face front">

@@ -1,4 +1,4 @@
-const CACHE = "codenames-v8";
+const CACHE = "codenames-v19";
 const ASSETS = [
   "./",
   "./index.html",
@@ -6,20 +6,22 @@ const ASSETS = [
   "./app.js",
   "./words.js",
   "./manifest.webmanifest",
-  "./icons/icon.svg",
-  "./icons/icon-192.png",
-  "./icons/icon-512.png",
-  "./art/red-agent-a.jpg",
-  "./art/red-agent-b.jpg",
-  "./art/red-agent-c.jpg",
-  "./art/blue-agent-a.jpg",
-  "./art/blue-agent-b.jpg",
-  "./art/blue-agent-c.jpg",
-  "./art/civilian-a.jpg",
-  "./art/civilian-b.jpg",
-  "./art/civilian-c.jpg",
-  "./art/civilian-d.jpg",
-  "./art/assassin.jpg",
+  "./icon.svg",
+  "./icon-192.png",
+  "./icon-512.png",
+  "./red-agent-a.jpg",
+  "./red-agent-b.jpg",
+  "./red-agent-c.jpg",
+  "./blue-agent-a.jpg",
+  "./blue-agent-b.jpg",
+  "./blue-agent-c.jpg",
+  "./civilian-a.jpg",
+  "./civilian-b.jpg",
+  "./civilian-c.jpg",
+  "./civilian-d.jpg",
+  "./assassin.jpg",
+  "./overlay-spy-left.png",
+  "./overlay-spy-right.png",
 ];
 
 self.addEventListener("install", (event) => {
