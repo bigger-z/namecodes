@@ -134,6 +134,8 @@ body {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 0.5rem;
+  perspective: 1100px;
+  -webkit-perspective: 1100px;
 }
 
 .card {
@@ -148,6 +150,8 @@ body {
   border: 0;
   background: transparent;
   cursor: pointer;
+  perspective: 1100px;
+  -webkit-perspective: 1100px;
 }
 
 .card:focus-visible {
@@ -159,11 +163,22 @@ body {
 .card-inner {
   position: absolute;
   inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  transform: scaleX(1);
-  -webkit-transform: scaleX(1);
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transition: transform 0.55s cubic-bezier(0.2, 0.75, 0.2, 1);
+  -webkit-transition: transform 0.55s cubic-bezier(0.2, 0.75, 0.2, 1);
+}
+
+.board.key-animating .card-inner {
+  transition-delay: calc(var(--i, 0) * 18ms);
+  -webkit-transition-delay: calc(var(--i, 0) * 18ms);
+}
+
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
 }
 
 .card[aria-disabled="true"] {
@@ -174,102 +189,13 @@ body {
   opacity: 0.5;
 }
 
-.board.show-key .card:not(.revealed) .card-inner,
-.card.revealed .card-inner {
-  animation: flip-to-back 0.55s ease both;
-  -webkit-animation: flip-to-back 0.55s ease both;
-}
-
-.board.show-key .card:not(.revealed) .front,
-.card.revealed .front {
-  animation: face-out 0.55s linear both;
-  -webkit-animation: face-out 0.55s linear both;
-}
-
-.board.show-key .card:not(.revealed) .back,
-.card.revealed .back {
-  animation: face-in 0.55s linear both;
-  -webkit-animation: face-in 0.55s linear both;
-}
-
-.board.hide-key .card:not(.revealed) .card-inner {
-  animation: flip-to-front 0.55s ease both;
-  -webkit-animation: flip-to-front 0.55s ease both;
-}
-
-.board.hide-key .card:not(.revealed) .front {
-  animation: face-in 0.55s linear both;
-  -webkit-animation: face-in 0.55s linear both;
-}
-
-.board.hide-key .card:not(.revealed) .back {
-  animation: face-out 0.55s linear both;
-  -webkit-animation: face-out 0.55s linear both;
-}
-
-@keyframes flip-to-back {
-  0%, 18% { transform: scaleX(1); }
-  50% { transform: scaleX(0); }
-  100% { transform: scaleX(1); }
-}
-
-@-webkit-keyframes flip-to-back {
-  0%, 18% { -webkit-transform: scaleX(1); }
-  50% { -webkit-transform: scaleX(0); }
-  100% { -webkit-transform: scaleX(1); }
-}
-
-@keyframes flip-to-front {
-  0%, 18% { transform: scaleX(1); }
-  50% { transform: scaleX(0); }
-  100% { transform: scaleX(1); }
-}
-
-@-webkit-keyframes flip-to-front {
-  0%, 18% { -webkit-transform: scaleX(1); }
-  50% { -webkit-transform: scaleX(0); }
-  100% { -webkit-transform: scaleX(1); }
-}
-
-@keyframes face-out {
-  0%, 46% { opacity: 1; visibility: visible; }
-  50%, 100% { opacity: 0; visibility: hidden; }
-}
-
-@-webkit-keyframes face-out {
-  0%, 46% { opacity: 1; visibility: visible; }
-  50%, 100% { opacity: 0; visibility: hidden; }
-}
-
-@keyframes face-in {
-  0%, 46% { opacity: 0; visibility: hidden; }
-  50%, 100% { opacity: 1; visibility: visible; }
-}
-
-@-webkit-keyframes face-in {
-  0%, 46% { opacity: 0; visibility: hidden; }
-  50%, 100% { opacity: 1; visibility: visible; }
-}
-
 .face {
   position: absolute;
   inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
   border-radius: 10px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   box-shadow: var(--shadow);
-}
-
-.front {
-  z-index: 2;
-  opacity: 1;
-  visibility: visible;
-}
-
-.back {
-  opacity: 0;
-  visibility: hidden;
 }
 
 .front {
@@ -281,6 +207,8 @@ body {
     linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 42%),
     var(--card);
   color: var(--word-ink);
+  transform: rotateY(0deg);
+  -webkit-transform: rotateY(0deg);
 }
 
 .front::before {
@@ -347,6 +275,8 @@ body {
 
 .back {
   background: #1a1410;
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
 }
 
 .portrait {
@@ -357,6 +287,8 @@ body {
   object-fit: cover;
   display: block;
   border-radius: 10px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .back .word-box {
@@ -367,10 +299,14 @@ body {
   width: auto;
   margin: 0;
   background: rgba(255, 255, 255, 0.94);
+  transform: translateZ(1px);
+  -webkit-transform: translateZ(1px);
 }
 
 .back .word {
   color: var(--word-ink);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .card.revealed[data-type="red"] .back .word {

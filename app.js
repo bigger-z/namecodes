@@ -25,8 +25,8 @@ const ART = {
 };
 
 let game = createGame();
+let keyAnimTimer = 0;
 let overlayTimer = 0;
-let hideKeyTimer = 0;
 
 function shuffle(items) {
   const list = [...items];
@@ -92,7 +92,6 @@ function showOverlay() {
 
 function startNewGame() {
   hideOverlay();
-  boardEl.classList.remove("show-key", "hide-key");
   game = createGame();
   renderBoard();
 }
@@ -107,12 +106,21 @@ function cardLabel(card) {
     : card.word;
 }
 
+function animateKeyFlip() {
+  boardEl.classList.add("key-animating");
+  window.clearTimeout(keyAnimTimer);
+  keyAnimTimer = window.setTimeout(() => {
+    boardEl.classList.remove("key-animating");
+  }, 900);
+}
+
 function syncCard(cardEl, card) {
   const locked = Boolean(game.winner) || card.revealed;
+  cardEl.classList.toggle("flipped", card.revealed || game.spymasterView);
+  cardEl.classList.toggle("revealed", Boolean(card.revealed));
   cardEl.setAttribute("aria-disabled", String(locked));
   cardEl.tabIndex = locked ? -1 : 0;
   cardEl.setAttribute("aria-label", cardLabel(card));
-  cardEl.classList.toggle("revealed", Boolean(card.revealed));
 }
 
 function updateHud() {
@@ -121,14 +129,7 @@ function updateHud() {
   scoreRedEl.classList.toggle("lead", game.turn === "red");
   scoreBlueEl.classList.toggle("lead", game.turn === "blue");
 
-  const wasShowingKey = boardEl.classList.contains("show-key");
   boardEl.classList.toggle("show-key", game.spymasterView);
-  if (wasShowingKey && !game.spymasterView) {
-    boardEl.classList.add("hide-key");
-    window.clearTimeout(hideKeyTimer);
-    hideKeyTimer = window.setTimeout(() => boardEl.classList.remove("hide-key"), 560);
-  }
-  if (game.spymasterView) boardEl.classList.remove("hide-key");
   keyBtn.setAttribute("aria-pressed", String(game.spymasterView));
   keyBtn.textContent = game.spymasterView ? "Hide key" : "Show key";
 }
@@ -209,6 +210,10 @@ boardEl.addEventListener("keydown", (event) => {
 
 keyBtn.addEventListener("click", () => {
   game.spymasterView = !game.spymasterView;
+  animateKeyFlip();
+  boardEl.querySelectorAll(".card").forEach((cardEl, index) => {
+    syncCard(cardEl, game.cards[index]);
+  });
   updateHud();
 });
 
