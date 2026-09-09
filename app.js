@@ -4,6 +4,7 @@ const boardEl = document.getElementById("board");
 const keyBtn = document.getElementById("key-btn");
 const newBtn = document.getElementById("new-btn");
 const restartBtn = document.getElementById("restart-btn");
+const cancelBtn = document.getElementById("cancel-btn");
 const overlayEl = document.getElementById("overlay");
 const overlayKicker = document.getElementById("overlay-kicker");
 const overlayTitle = document.getElementById("overlay-title");
@@ -69,8 +70,17 @@ function createGame() {
 
 function hideOverlay() {
   window.clearTimeout(overlayTimer);
-  overlayEl.classList.remove("open", "win-red", "win-blue", "win-assassin");
+  overlayEl.classList.remove("open", "win-red", "win-blue", "win-assassin", "confirm");
   overlayEl.setAttribute("aria-hidden", "true");
+}
+
+function openOverlay(focusEl = restartBtn) {
+  window.clearTimeout(overlayTimer);
+  overlayTimer = window.setTimeout(() => {
+    overlayEl.classList.add("open");
+    overlayEl.setAttribute("aria-hidden", "false");
+    focusEl.focus();
+  }, overlayEl.classList.contains("confirm") ? 0 : 520);
 }
 
 function showOverlay() {
@@ -79,15 +89,17 @@ function showOverlay() {
 
   overlayKicker.textContent = assassin ? "Assassin" : "Game over";
   overlayTitle.textContent = `${TEAM_LABEL[winnerTeam]} wins`;
-  overlayEl.classList.remove("win-red", "win-blue", "win-assassin");
+  overlayEl.classList.remove("win-red", "win-blue", "win-assassin", "confirm");
   overlayEl.classList.add(assassin ? "win-assassin" : `win-${winnerTeam}`);
+  openOverlay(restartBtn);
+}
 
-  window.clearTimeout(overlayTimer);
-  overlayTimer = window.setTimeout(() => {
-    overlayEl.classList.add("open");
-    overlayEl.setAttribute("aria-hidden", "false");
-    restartBtn.focus();
-  }, 520);
+function showNewGameConfirm() {
+  overlayKicker.textContent = "";
+  overlayTitle.textContent = "New game?";
+  overlayEl.classList.remove("win-red", "win-blue", "win-assassin");
+  overlayEl.classList.add("confirm");
+  openOverlay(cancelBtn);
 }
 
 function startNewGame() {
@@ -220,7 +232,8 @@ keyBtn.addEventListener("click", () => {
   updateHud();
 });
 
-newBtn.addEventListener("click", startNewGame);
+newBtn.addEventListener("click", showNewGameConfirm);
+cancelBtn.addEventListener("click", hideOverlay);
 restartBtn.addEventListener("click", startNewGame);
 
 renderBoard();

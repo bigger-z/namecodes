@@ -12,7 +12,7 @@
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="icon" href="./images/icon-192.png" type="image/png" />
     <link rel="apple-touch-icon" href="./images/icon-192.png" />
-    <link rel="stylesheet" href="./styles.css?v=29" />
+    <link rel="stylesheet" href="./styles.css?v=30" />
   </head>
   <body>
     <svg class="svg-defs" aria-hidden="true" focusable="false">
@@ -62,9 +62,12 @@
       <div class="overlay-panel" role="dialog" aria-modal="true" aria-labelledby="overlay-title">
         <p id="overlay-kicker" class="overlay-kicker"></p>
         <h2 id="overlay-title" class="overlay-title"></h2>
-        <button type="button" id="restart-btn" class="btn overlay-btn">Restart</button>
+        <div class="overlay-actions">
+          <button type="button" id="cancel-btn" class="btn ghost overlay-btn">Cancel</button>
+          <button type="button" id="restart-btn" class="btn overlay-btn">New game</button>
+        </div>
       </div>
     </div>
-    <script type="module" src="./app.js?v=23"></script>
+    <script type="module" src="./app.js?v=25"></script>
   </body>
 </html>
