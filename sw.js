@@ -1,4 +1,4 @@
-const CACHE = "codenames-v21";
+const CACHE = "codenames-v32";
 const ASSETS = [
   "./",
   "./index.html",
@@ -41,6 +41,9 @@ self.addEventListener("fetch", (event) => {
   const request = event.request;
   if (request.method !== "GET") return;
 
+  const url = new URL(request.url);
+  const freshFirst = /\.(?:html|js|css|webmanifest)$/.test(url.pathname) || url.pathname.endsWith("/");
+
   event.respondWith(
     caches.match(request).then((cached) => {
       const fetched = fetch(request)
@@ -52,7 +55,7 @@ self.addEventListener("fetch", (event) => {
           return response;
         })
         .catch(() => cached);
-      return cached || fetched;
+      return freshFirst ? fetched : cached || fetched;
     })
   );
 });

@@ -1,8 +1,6 @@
 import { WORDS } from "./words.js?v=11";
 
 const boardEl = document.getElementById("board");
-const statusEl = document.getElementById("status");
-const turnEl = document.getElementById("turn-line");
 const keyBtn = document.getElementById("key-btn");
 const newBtn = document.getElementById("new-btn");
 const restartBtn = document.getElementById("restart-btn");
@@ -27,8 +25,8 @@ const ART = {
 };
 
 let game = createGame();
-let keyAnimTimer = 0;
 let overlayTimer = 0;
+let hideKeyTimer = 0;
 
 function shuffle(items) {
   const list = [...items];
@@ -54,6 +52,7 @@ function createGame() {
   return {
     startingTeam,
     otherTeam,
+    turn: startingTeam,
     spymasterView: false,
     winner: null,
     cards: shuffle(WORDS)
@@ -93,6 +92,7 @@ function showOverlay() {
 
 function startNewGame() {
   hideOverlay();
+  boardEl.classList.remove("show-key", "hide-key");
   game = createGame();
   renderBoard();
 }
@@ -107,69 +107,57 @@ function cardLabel(card) {
     : card.word;
 }
 
-function animateKeyFlip() {
-  boardEl.classList.add("key-animating");
-  window.clearTimeout(keyAnimTimer);
-  keyAnimTimer = window.setTimeout(() => {
-    boardEl.classList.remove("key-animating");
-  }, 900);
-}
-
-function syncCard(button, card) {
-  button.classList.toggle("flipped", card.revealed || game.spymasterView);
-  button.classList.toggle("revealed", card.revealed);
-  button.disabled = Boolean(game.winner) || card.revealed;
-  button.setAttribute("aria-label", cardLabel(card));
+function syncCard(cardEl, card) {
+  const locked = Boolean(game.winner) || card.revealed;
+  cardEl.setAttribute("aria-disabled", String(locked));
+  cardEl.tabIndex = locked ? -1 : 0;
+  cardEl.setAttribute("aria-label", cardLabel(card));
+  cardEl.classList.toggle("revealed", Boolean(card.revealed));
 }
 
 function updateHud() {
   scoreRedEl.querySelector(".score-value").textContent = String(remaining("red"));
   scoreBlueEl.querySelector(".score-value").textContent = String(remaining("blue"));
-  scoreRedEl.classList.toggle("lead", game.startingTeam === "red");
-  scoreBlueEl.classList.toggle("lead", game.startingTeam === "blue");
+  scoreRedEl.classList.toggle("lead", game.turn === "red");
+  scoreBlueEl.classList.toggle("lead", game.turn === "blue");
 
-  turnEl.textContent = game.winner
-    ? "Game over"
-    : `${TEAM_LABEL[game.startingTeam]} starts · 8 cards`;
-  turnEl.className = `turn-line ${game.startingTeam}`;
-
+  const wasShowingKey = boardEl.classList.contains("show-key");
+  boardEl.classList.toggle("show-key", game.spymasterView);
+  if (wasShowingKey && !game.spymasterView) {
+    boardEl.classList.add("hide-key");
+    window.clearTimeout(hideKeyTimer);
+    hideKeyTimer = window.setTimeout(() => boardEl.classList.remove("hide-key"), 560);
+  }
+  if (game.spymasterView) boardEl.classList.remove("hide-key");
   keyBtn.setAttribute("aria-pressed", String(game.spymasterView));
   keyBtn.textContent = game.spymasterView ? "Hide key" : "Show key";
-
-  statusEl.className = "status";
-  if (game.winner) {
-    statusEl.textContent = "";
-  } else {
-    statusEl.textContent = game.spymasterView ? "Key visible to clue givers." : "";
-  }
 }
 
 function renderBoard() {
   boardEl.replaceChildren(
     ...game.cards.map((card, index) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "card";
-      button.dataset.type = card.type;
-      button.dataset.index = String(index);
-      button.style.setProperty("--i", String(index));
-      button.classList.toggle("long", card.word.length > 6);
-      button.innerHTML = `
-        <span class="card-inner">
-          <span class="face front">
+      const cardEl = document.createElement("div");
+      cardEl.className = "card";
+      cardEl.setAttribute("role", "button");
+      cardEl.dataset.type = card.type;
+      cardEl.dataset.index = String(index);
+      cardEl.style.setProperty("--i", String(index));
+      cardEl.classList.toggle("long", card.word.length > 6);
+      cardEl.innerHTML = `
+        <div class="card-inner">
+          <div class="face front">
             <span class="punch"></span>
-            <span class="word mirror">${card.word}</span>
             <span class="slot"></span>
             <span class="word-box"><span class="word">${card.word}</span></span>
-          </span>
-          <span class="face back">
+          </div>
+          <div class="face back">
             <img class="portrait" src="${card.art}" alt="" />
             <span class="word-box"><span class="word">${card.word}</span></span>
-          </span>
-        </span>
+          </div>
+        </div>
       `;
-      syncCard(button, card);
-      return button;
+      syncCard(cardEl, card);
+      return cardEl;
     })
   );
   updateHud();
@@ -183,8 +171,13 @@ function revealCard(index) {
 
   if (card.type === "assassin") {
     game.winner = "assassin";
+    game.otherTeam = game.turn === "red" ? "blue" : "red";
   } else if (card.type === "red" || card.type === "blue") {
     if (remaining(card.type) === 0) game.winner = card.type;
+  }
+
+  if (!game.winner && card.type !== game.turn) {
+    game.turn = game.turn === "red" ? "blue" : "red";
   }
 
   const button = boardEl.querySelector(`[data-index="${index}"]`);
@@ -206,12 +199,16 @@ boardEl.addEventListener("click", (event) => {
   revealCard(Number(card.dataset.index));
 });
 
+boardEl.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter" && event.key !== " ") return;
+  const card = event.target.closest(".card");
+  if (!card) return;
+  event.preventDefault();
+  revealCard(Number(card.dataset.index));
+});
+
 keyBtn.addEventListener("click", () => {
   game.spymasterView = !game.spymasterView;
-  animateKeyFlip();
-  boardEl.querySelectorAll(".card").forEach((button, index) => {
-    syncCard(button, game.cards[index]);
-  });
   updateHud();
 });
 
