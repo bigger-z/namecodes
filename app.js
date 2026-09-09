@@ -143,7 +143,10 @@ function renderBoard() {
       cardEl.dataset.type = card.type;
       cardEl.dataset.index = String(index);
       cardEl.style.setProperty("--i", String(index));
-      cardEl.classList.toggle("long", card.word.length > 6);
+      const len = card.word.length;
+      cardEl.classList.toggle("long-sm", len > 6);
+      cardEl.classList.toggle("long-md", len > 9);
+      cardEl.classList.toggle("long-lg", len > 12);
       cardEl.innerHTML = `
         <div class="card-inner">
           <div class="face front">
