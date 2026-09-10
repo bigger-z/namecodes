@@ -1,4 +1,4 @@
-import { WORDS } from "./words.js?v=16";
+import { WORDS } from "./words.js?v=20";
 
 const boardEl = document.getElementById("board");
 const keyBtn = document.getElementById("key-btn");
