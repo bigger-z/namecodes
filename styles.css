@@ -353,22 +353,22 @@ main {
   backface-visibility: hidden;
 }
 
-.card.revealed[data-type="red"] .back .word {
+.card[data-type="red"] .back .word {
   color: var(--red);
   -webkit-text-fill-color: var(--red);
 }
 
-.card.revealed[data-type="blue"] .back .word {
+.card[data-type="blue"] .back .word {
   color: var(--blue);
   -webkit-text-fill-color: var(--blue);
 }
 
-.card.revealed[data-type="civilian"] .back .word {
-  color: #4a4a4a;
-  -webkit-text-fill-color: #4a4a4a;
+.card[data-type="civilian"] .back .word {
+  color: #d5bf98;
+  -webkit-text-fill-color: #d5bf98;
 }
 
-.card.revealed[data-type="assassin"] .back .word {
+.card[data-type="assassin"] .back .word {
   color: #111;
   -webkit-text-fill-color: #111;
 }
