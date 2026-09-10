@@ -1,24 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
     <meta name="theme-color" content="#7a123f" />
-    <meta name="description" content="A simple two-team Codenames board you can play in the browser." />
+    <meta
+      name="description"
+      content="A simple two-team Codenames board you can play in the browser."
+    />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
     <meta name="apple-mobile-web-app-title" content="Codenames" />
     <title>Codenames</title>
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="icon" href="./images/icon-192.png" type="image/png" />
     <link rel="apple-touch-icon" href="./images/icon-192.png" />
-    <link rel="stylesheet" href="./styles.css?v=35" />
+    <link rel="stylesheet" href="./styles.css?v=39" />
   </head>
   <body>
     <svg class="svg-defs" aria-hidden="true" focusable="false">
       <filter id="stamp" x="-8%" y="-8%" width="116%" height="116%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3" result="noise" />
-        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.8" xChannelSelector="R" yChannelSelector="G" />
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.85"
+          numOctaves="2"
+          seed="3"
+          result="noise"
+        />
+        <feDisplacementMap
+          in="SourceGraphic"
+          in2="noise"
+          scale="1.8"
+          xChannelSelector="R"
+          yChannelSelector="G"
+        />
       </filter>
     </svg>
 
@@ -45,7 +66,12 @@
       </main>
 
       <footer class="controls">
-        <button type="button" id="key-btn" class="btn ghost" aria-pressed="false">
+        <button
+          type="button"
+          id="key-btn"
+          class="btn ghost"
+          aria-pressed="false"
+        >
           Show key
         </button>
         <button type="button" id="new-btn" class="btn">New game</button>
@@ -55,19 +81,36 @@
     <div id="overlay" class="overlay" aria-hidden="true">
       <div class="overlay-spies" aria-hidden="true">
         <div class="overlay-spies-inner">
-          <img class="overlay-spy overlay-spy-left" src="./images/overlay-spy-left.png?v=16" alt="" />
-          <img class="overlay-spy overlay-spy-right" src="./images/overlay-spy-right.png?v=16" alt="" />
+          <img
+            class="overlay-spy overlay-spy-left"
+            src="./images/overlay-spy-left.png?v=16"
+            alt=""
+          />
+          <img
+            class="overlay-spy overlay-spy-right"
+            src="./images/overlay-spy-right.png?v=16"
+            alt=""
+          />
         </div>
       </div>
-      <div class="overlay-panel" role="dialog" aria-modal="true" aria-labelledby="overlay-title">
+      <div
+        class="overlay-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="overlay-title"
+      >
         <p id="overlay-kicker" class="overlay-kicker"></p>
         <h2 id="overlay-title" class="overlay-title"></h2>
         <div class="overlay-actions">
-          <button type="button" id="cancel-btn" class="btn ghost overlay-btn">Cancel</button>
-          <button type="button" id="restart-btn" class="btn overlay-btn">New game</button>
+          <button type="button" id="cancel-btn" class="btn ghost overlay-btn">
+            Cancel
+          </button>
+          <button type="button" id="restart-btn" class="btn overlay-btn">
+            New game
+          </button>
         </div>
       </div>
     </div>
-    <script type="module" src="./app.js?v=25"></script>
+    <script type="module" src="./app.js?v=26"></script>
   </body>
 </html>

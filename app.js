@@ -14,8 +14,16 @@ const scoreBlueEl = document.getElementById("score-blue");
 const TEAM_LABEL = { red: "Red", blue: "Blue" };
 
 const ART = {
-  red: ["./images/red-agent-a.jpg", "./images/red-agent-b.jpg", "./images/red-agent-c.jpg"],
-  blue: ["./images/blue-agent-a.jpg", "./images/blue-agent-b.jpg", "./images/blue-agent-c.jpg"],
+  red: [
+    "./images/red-agent-a.jpg",
+    "./images/red-agent-b.jpg",
+    "./images/red-agent-c.jpg",
+  ],
+  blue: [
+    "./images/blue-agent-a.jpg",
+    "./images/blue-agent-b.jpg",
+    "./images/blue-agent-c.jpg",
+  ],
   civilian: [
     "./images/civilian-a.jpg",
     "./images/civilian-b.jpg",
@@ -70,17 +78,26 @@ function createGame() {
 
 function hideOverlay() {
   window.clearTimeout(overlayTimer);
-  overlayEl.classList.remove("open", "win-red", "win-blue", "win-assassin", "confirm");
+  overlayEl.classList.remove(
+    "open",
+    "win-red",
+    "win-blue",
+    "win-assassin",
+    "confirm",
+  );
   overlayEl.setAttribute("aria-hidden", "true");
 }
 
 function openOverlay(focusEl = restartBtn) {
   window.clearTimeout(overlayTimer);
-  overlayTimer = window.setTimeout(() => {
-    overlayEl.classList.add("open");
-    overlayEl.setAttribute("aria-hidden", "false");
-    focusEl.focus();
-  }, overlayEl.classList.contains("confirm") ? 0 : 520);
+  overlayTimer = window.setTimeout(
+    () => {
+      overlayEl.classList.add("open");
+      overlayEl.setAttribute("aria-hidden", "false");
+      focusEl.focus();
+    },
+    overlayEl.classList.contains("confirm") ? 0 : 520,
+  );
 }
 
 function showOverlay() {
@@ -109,7 +126,8 @@ function startNewGame() {
 }
 
 function remaining(team) {
-  return game.cards.filter((card) => card.type === team && !card.revealed).length;
+  return game.cards.filter((card) => card.type === team && !card.revealed)
+    .length;
 }
 
 function cardLabel(card) {
@@ -136,8 +154,12 @@ function syncCard(cardEl, card) {
 }
 
 function updateHud() {
-  scoreRedEl.querySelector(".score-value").textContent = String(remaining("red"));
-  scoreBlueEl.querySelector(".score-value").textContent = String(remaining("blue"));
+  scoreRedEl.querySelector(".score-value").textContent = String(
+    remaining("red"),
+  );
+  scoreBlueEl.querySelector(".score-value").textContent = String(
+    remaining("blue"),
+  );
   scoreRedEl.classList.toggle("lead", game.turn === "red");
   scoreBlueEl.classList.toggle("lead", game.turn === "blue");
 
@@ -163,7 +185,6 @@ function renderBoard() {
         <div class="card-inner">
           <div class="face front">
             <span class="punch"></span>
-            <span class="slot"></span>
             <span class="word-box"><span class="word">${card.word}</span></span>
           </div>
           <div class="face back">
@@ -174,7 +195,7 @@ function renderBoard() {
       `;
       syncCard(cardEl, card);
       return cardEl;
-    })
+    }),
   );
   updateHud();
 }

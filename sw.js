@@ -1,4 +1,4 @@
-const CACHE = "codenames-v41";
+const CACHE = "codenames-v45";
 const ASSETS = [
   "./",
   "./index.html",
@@ -6,6 +6,7 @@ const ASSETS = [
   "./app.js",
   "./words.js",
   "./manifest.webmanifest",
+  "./fonts/D-DIN-Bold.woff2",
   "./images/icon-192.png",
   "./images/icon-512.png",
   "./images/red-agent-a.jpg",
@@ -30,9 +31,13 @@ self.addEventListener("install", (event) => {
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key)))
-    )
+    caches
+      .keys()
+      .then((keys) =>
+        Promise.all(
+          keys.filter((key) => key !== CACHE).map((key) => caches.delete(key)),
+        ),
+      ),
   );
   self.clients.claim();
 });
@@ -42,7 +47,9 @@ self.addEventListener("fetch", (event) => {
   if (request.method !== "GET") return;
 
   const url = new URL(request.url);
-  const freshFirst = /\.(?:html|js|css|webmanifest)$/.test(url.pathname) || url.pathname.endsWith("/");
+  const freshFirst =
+    /\.(?:html|js|css|webmanifest)$/.test(url.pathname) ||
+    url.pathname.endsWith("/");
 
   event.respondWith(
     caches.match(request).then((cached) => {
@@ -56,6 +63,6 @@ self.addEventListener("fetch", (event) => {
         })
         .catch(() => cached);
       return freshFirst ? fetched : cached || fetched;
-    })
+    }),
   );
 });
