@@ -568,11 +568,26 @@ main {
   }
 }
 
+.bottom {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
 .controls {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.7rem;
-  margin-top: auto;
+}
+
+.credit {
+  font-family: "DIN";
+  margin: 0;
+  text-align: center;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 244, 220, 0.38);
 }
 
 .btn {
