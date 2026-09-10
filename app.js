@@ -25,10 +25,10 @@ const ART = {
     "./images/blue-agent-c.jpg",
   ],
   civilian: [
-    "./images/civilian-a.jpg",
-    "./images/civilian-b.jpg",
-    "./images/civilian-c.jpg",
-    "./images/civilian-d.jpg",
+    "./images/civilian-a.jpg?v=2",
+    "./images/civilian-b.jpg?v=2",
+    "./images/civilian-c.jpg?v=2",
+    "./images/civilian-d.jpg?v=2",
   ],
   assassin: ["./images/assassin.jpg"],
 };
