@@ -353,24 +353,40 @@ main {
   backface-visibility: hidden;
 }
 
+.card[data-type="red"] .back .word-box {
+  background: var(--red);
+}
+
 .card[data-type="red"] .back .word {
-  color: var(--red);
-  -webkit-text-fill-color: var(--red);
+  color: rgba(255, 255, 255, 0.94);
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.94);
+}
+
+.card[data-type="blue"] .back .word-box {
+  background: var(--blue);
 }
 
 .card[data-type="blue"] .back .word {
-  color: var(--blue);
-  -webkit-text-fill-color: var(--blue);
+  color: rgba(255, 255, 255, 0.94);
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.94);
+}
+
+.card[data-type="civilian"] .back .word-box {
+  background: #d5bf98;
 }
 
 .card[data-type="civilian"] .back .word {
-  color: #d5bf98;
-  -webkit-text-fill-color: #d5bf98;
+  color: rgba(255, 255, 255, 0.94);
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.94);
+}
+
+.card[data-type="assassin"] .back .word-box {
+  background: #111;
 }
 
 .card[data-type="assassin"] .back .word {
-  color: #111;
-  -webkit-text-fill-color: #111;
+  color: rgba(255, 255, 255, 0.94);
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.94);
 }
 
 .status {
